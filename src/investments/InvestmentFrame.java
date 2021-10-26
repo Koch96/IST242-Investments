@@ -7,6 +7,8 @@ import javax.swing.*;
 public class InvestmentFrame extends JFrame{
     private JButton button;
     private JLabel resultLabel;
+    private JLabel rateLabel;
+    private JTextField rateField;
     private JPanel panel;
     private double balance;
     
@@ -28,15 +30,21 @@ public class InvestmentFrame extends JFrame{
         
         resultLabel = new JLabel(String.format("Balance: " + "$ %.2f", balance));
         
+        rateLabel = new JLabel("Int rate: ");
+        rateField = new JTextField("" + INTEREST_RATE, 5);
+        
         panel = new JPanel();
         panel.add(button);
+        panel.add(rateLabel);
+        panel.add(rateField);
         panel.add(resultLabel);
         add(panel);
     }
     
     class AddInterestListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            double interest = balance * INTEREST_RATE / 100;
+            double rate = Double.parseDouble(rateField.getText());
+            double interest = balance * rate / 100;
             balance += interest;
             resultLabel.setText(String.format("Balance: " + "$ %.2f", balance));
         }

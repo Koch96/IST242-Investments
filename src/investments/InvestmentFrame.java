@@ -1,5 +1,6 @@
 package investments;
 
+import java.awt.event.*;
 import javax.swing.*;
 
 /** @author sak5680 */
@@ -22,11 +23,22 @@ public class InvestmentFrame extends JFrame{
     
     private void createComponents(){
         button = new JButton("Add Interest");
+        ActionListener listener = new AddInterestListener();
+        button.addActionListener(listener);
+        
         resultLabel = new JLabel(String.format("Balance: " + "$ %.2f", balance));
         
         panel = new JPanel();
         panel.add(button);
         panel.add(resultLabel);
         add(panel);
+    }
+    
+    class AddInterestListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            double interest = balance * INTEREST_RATE / 100;
+            balance += interest;
+            resultLabel.setText(String.format("Balance: " + "$ %.2f", balance));
+        }
     }
 }

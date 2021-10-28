@@ -9,7 +9,9 @@ public class InvestmentFrame extends JFrame{
     private JLabel resultLabel;
     private JLabel rateLabel;
     private JTextField rateField;
+    private JTextArea textArea;
     private JPanel panel;
+    private JScrollPane scrollPane;
     private double balance;
     
     private static final double INTEREST_RATE = 5;
@@ -32,12 +34,16 @@ public class InvestmentFrame extends JFrame{
         
         rateLabel = new JLabel("Int rate: ");
         rateField = new JTextField("" + INTEREST_RATE, 5);
+        textArea = new JTextArea(10, 30);
+        textArea.setText(String.format("Balance: $ %.2f%n", balance));
+        textArea.setEditable(false);
+        scrollPane = new JScrollPane(textArea);
         
         panel = new JPanel();
         panel.add(button);
         panel.add(rateLabel);
         panel.add(rateField);
-        panel.add(resultLabel);
+        panel.add(scrollPane);
         add(panel);
     }
     
@@ -46,7 +52,7 @@ public class InvestmentFrame extends JFrame{
             double rate = Double.parseDouble(rateField.getText());
             double interest = balance * rate / 100;
             balance += interest;
-            resultLabel.setText(String.format("Balance: " + "$ %.2f", balance));
+            textArea.append(String.format("$ %.2f %n", balance));
         }
     }
 }
